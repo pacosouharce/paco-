@@ -40,6 +40,25 @@ export default function DemoOne() {
 				className="h-screen w-full overflow-hidden"
 			/>
 
+			{/*
+			  La galerie ci-dessus est un rendu WebGL (canvas) : les photos y sont
+			  chargées comme textures GPU, invisibles pour les moteurs de recherche
+			  et les lecteurs d'écran. Cette section expose les mêmes photos comme
+			  de vraies balises <img> avec un alt réel — visuellement masquée
+			  (sr-only) mais bien présente dans le DOM, donc indexable par Google
+			  Images et lisible par un lecteur d'écran.
+			*/}
+			<section aria-label="Galerie photo" className="sr-only">
+				<h2>Galerie — Paco Souharce, photographe de surf à Hossegor</h2>
+				<ul>
+					{images.map((img) => (
+						<li key={img.src}>
+							<img src={img.src} alt={img.alt} />
+						</li>
+					))}
+				</ul>
+			</section>
+
 			<div className="h-screen inset-0 pointer-events-none fixed flex items-center justify-center text-center px-3 mix-blend-exclusion text-white">
 				<h1 className="font-serif text-4xl md:text-7xl tracking-tight">
 					<span className="italic">Paco Souharce</span>
