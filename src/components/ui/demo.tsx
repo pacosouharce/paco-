@@ -55,7 +55,7 @@ export default function DemoOne() {
 			<div className="pointer-events-auto fixed bottom-24 left-0 right-0 flex justify-center">
 				<div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-[11px] text-white/70">
 					<a
-						href="https://www.instagram.com/SOUHPAX/"
+						href="https://www.instagram.com/souhpax/"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="hover:text-white underline underline-offset-4"
