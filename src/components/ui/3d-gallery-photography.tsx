@@ -205,6 +205,10 @@ function GalleryScene({
 	const [scrollVelocity, setScrollVelocity] = useState(0);
 	const [autoPlay, setAutoPlay] = useState(true);
 	const lastInteraction = useRef(Date.now());
+	const touchHold = useRef<{ active: boolean; start: number }>({
+		active: false,
+		start: 0,
+	});
 
 	const normalizedImages = useMemo(
 		() =>
@@ -301,18 +305,40 @@ function GalleryScene({
 		[speed]
 	);
 
+	// Handle touch input: a press-and-hold ramps scroll speed up the longer
+	// it's held, released touch decays back through the normal damping.
+	const handleTouchStart = useCallback((event: TouchEvent) => {
+		event.preventDefault();
+		touchHold.current = { active: true, start: Date.now() };
+		setAutoPlay(false);
+		lastInteraction.current = Date.now();
+	}, []);
+
+	const handleTouchEnd = useCallback(() => {
+		touchHold.current.active = false;
+		lastInteraction.current = Date.now();
+	}, []);
+
 	useEffect(() => {
 		const canvas = document.querySelector('canvas');
 		if (canvas) {
 			canvas.addEventListener('wheel', handleWheel, { passive: false });
 			document.addEventListener('keydown', handleKeyDown);
+			canvas.addEventListener('touchstart', handleTouchStart, {
+				passive: false,
+			});
+			canvas.addEventListener('touchend', handleTouchEnd);
+			canvas.addEventListener('touchcancel', handleTouchEnd);
 
 			return () => {
 				canvas.removeEventListener('wheel', handleWheel);
 				document.removeEventListener('keydown', handleKeyDown);
+				canvas.removeEventListener('touchstart', handleTouchStart);
+				canvas.removeEventListener('touchend', handleTouchEnd);
+				canvas.removeEventListener('touchcancel', handleTouchEnd);
 			};
 		}
-	}, [handleWheel, handleKeyDown]);
+	}, [handleWheel, handleKeyDown, handleTouchStart, handleTouchEnd]);
 
 	// Auto-play logic
 	useEffect(() => {
@@ -328,6 +354,15 @@ function GalleryScene({
 		// Apply auto-play
 		if (autoPlay) {
 			setScrollVelocity((prev) => prev + 0.3 * delta);
+		}
+
+		// Press-and-hold on touch: the longer the finger stays down, the
+		// faster the gallery advances (ramps up, capped at a max speed).
+		if (touchHold.current.active) {
+			const heldSeconds = (Date.now() - touchHold.current.start) / 1000;
+			const rampedSpeed = Math.min(0.5 + heldSeconds * 1.5, 6) * speed;
+			setScrollVelocity((prev) => prev + rampedSpeed * delta);
+			lastInteraction.current = Date.now();
 		}
 
 		// Damping
