@@ -46,9 +46,12 @@ export default function DemoOne() {
 				</h1>
 			</div>
 
-			<div className="fixed top-6 left-0 right-0 flex justify-center pointer-events-none">
+			<div className="fixed top-6 left-0 right-0 flex flex-col items-center gap-1 px-4 text-center pointer-events-none">
 				<p className="font-mono uppercase text-[11px] font-semibold tracking-widest text-white/80">
-					Photographe de surf
+					Photographe de surf — Hossegor
+				</p>
+				<p className="max-w-xs text-[11px] text-white/50">
+					Je cherche à capturer le flow du surfeur : le geste, la ligne, l'instant où le corps épouse la vague — plus que la performance.
 				</p>
 			</div>
 
