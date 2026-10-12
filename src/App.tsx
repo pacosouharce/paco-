@@ -1,7 +1,7 @@
-import DemoOne from '@/components/ui/demo'
+import Toile from '@/components/toile'
 
 function App() {
-  return <DemoOne />
+  return <Toile />
 }
 
 export default App
