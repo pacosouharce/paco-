@@ -1,7 +1,7 @@
-import Toile from '@/components/toile'
+import Ambiance from '@/components/ambiance'
 
 function App() {
-  return <Toile />
+  return <Ambiance />
 }
 
 export default App
