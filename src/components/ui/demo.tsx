@@ -18,6 +18,8 @@ export default function DemoOne() {
 		{ src: '/images/14-visee.jpg', alt: "Surfeur tenant une caméra devant l'œil, profil" },
 		{ src: '/images/15-crepuscule.jpg', alt: 'Silhouette dans l\'eau face au soleil couchant' },
 		{ src: '/images/16-tube.jpg', alt: 'Surfeur dans le tube, contre-jour, noir et blanc' },
+		{ src: '/images/17-longboard.jpg', alt: 'Longboardeur debout sur sa planche au coucher du soleil' },
+		{ src: '/images/18-soleil.jpg', alt: "Silhouette d'un surfeur sous un soleil couchant orangé" },
 	];
 
 	return (
